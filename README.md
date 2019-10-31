@@ -1,68 +1,78 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## React-ui库
 
-In the project directory, you can run:
+1. https://mobile.ant.design/docs/react/use-with-create-react-app-cn
+2. 写一下标签
+3. 传一些属性
+4. 效果就出来了
 
-### `npm start`
+## React-ui
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. material-ui(国外)
+2. ant-design (国内蚂蚁金服)
+3. https://ant.design/index-cn pc端
+4. https://mobile.ant.design/index-cn 移动端
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+## 解决300ms秒点击延迟事件 用上这个库之后能让点击没有300ms的延迟
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+	  <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+	  <script>
+	    if ('addEventListener' in document) {
+	      document.addEventListener('DOMContentLoaded', function() {
+	        FastClick.attach(document.body);
+	      }, false);
+	    }
+	    if(!window.Promise) {
+	      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+	    }
+	  </script>
 
-### `npm run build`
+## 使用组件库 有标签式组件和API组件
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. 组件库中有很多组件 antd-mobile 大的组件库 向外暴露很多属性 每一个属性就是一个组件
+2. import { Button,Toast} from 'antd-mobile' 
+3. antd-mobile 整个库都引入了
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## 引入整个样式文件 全局引入
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. import 'antd-mobile/dist/antd-mobile.css';
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 按需打包组件(按需加载) 实现按需打包(js/css)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1.  下载依赖包
+2.  npm install babel-plugin-import --save-dev
+3.  npm install react-app-rewired  --save-dev
+4.  npm install react-app-rewired customize-cra --save-dev
+4.  修改配置
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+	"scripts": {
+		-   "start": "react-scripts start",
+		+   "start": "react-app-rewired start",
+		-   "build": "react-scripts build",
+		+   "build": "react-app-rewired build",
+		-   "test": "react-scripts test --env=jsdom",
+		+   "test": "react-app-rewired test --env=jsdom",
+		}
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+5. config-overrides.js 创建根目录文件
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+	const { override, fixBabelImports } = require('customize-cra');
+	
+	module.exports = override(
+	  fixBabelImports('import', {
+	    libraryName: 'antd-mobile',
+	    style: 'css',
+	  }),
+	);
 
-### Code Splitting
+## 引入的这些标签
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. 跟html标签出不多
+2. 写标签传递一些属性
+3. 写组件标签样式传递属性
+4. 每一个组件标签都可以接收一些属性
